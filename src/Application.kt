@@ -1,6 +1,7 @@
 package com.example
 
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 import io.ktor.application.*
 import io.ktor.response.*
 import io.ktor.request.*
@@ -93,24 +94,11 @@ fun Application.module(testing: Boolean = false) {
         }
 
         post("/savebooks") {
-            val multipart = call.receive<String>()
-            call.respond(multipart+"csdc")
-            /*call.respondTextWriter {
-                if (!call.request.isMultipart()) {
-                    appendln("Not a multipart request")
-                } else {
-                    while (true) {
-                        val part = multipart.readPart() ?: break
-                        when (part) {
-                            is PartData.FormItem ->
-                                appendln("FormItem: ${part.name} = ${part.value}")
-                            is PartData.FileItem ->
-                                appendln("FileItem: ${part.name} -> ${part.originalFileName} of ${part.contentType}")
-                        }
-                        part.dispose()
-                    }
-                }
-            }*/
+            val text = call.receiveText()
+            println(text)
+            call.respond(text)
+
+
         }
     }
 }
